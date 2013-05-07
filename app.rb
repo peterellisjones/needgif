@@ -45,7 +45,7 @@ class App < Sinatra::Application
       (redirect("/assets/not_found.gif") and return) if image_urls.length == 0
       # cache for a day by default
       $Cache.set(m_query, image_urls.to_json, 60*60*24)
-      redirect image_urls.sample
+      redirect image_urls.first
     rescue Exception => e
       redirect "/assets/not_found.gif"
     end
