@@ -39,7 +39,7 @@ class App < Sinatra::Application
     begin
       html = Nokogiri::HTML(open(url))
       image_urls = []
-      html.css('.images_table td a').to_a do |a|
+      html.css('.images_table td a').each do |a|
         image_urls.push CGI::parse(a[:href].gsub(/^[^\?]+\?/, ''))["imgurl"][0]
       end
       (redirect("/assets/not_found.gif") and return) if image_urls.length == 0
