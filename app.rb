@@ -31,7 +31,7 @@ class App < Sinatra::Application
     m_query = "QUERY:"+query.to_s
     begin
       ret = $Cache.get(m_query)
-      (redirect(image_url) and return) if image_url = JSON.parse(ret).sample
+      (redirect(image_url) and return) if image_url = JSON.parse(ret).first
     rescue
     end
 
