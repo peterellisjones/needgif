@@ -2,8 +2,10 @@ GEM
   remote: https://rubygems.org/
   specs:
     daemons (1.1.9)
+    dalli (2.6.2)
     eventmachine (1.0.3)
     kgio (2.8.0)
+    memcachier (0.0.2)
     newrelic_rpm (3.6.0.78)
     nokogiri (1.5.9)
     rack (1.5.2)
@@ -28,6 +30,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dalli
+  memcachier
   newrelic_rpm
   nokogiri
   sinatra
