@@ -23,7 +23,9 @@ class App < Sinatra::Application
     # replace hyphens with spaces and URI encode
     query = URI.encode query.gsub("-", "")
 
-    url = "https://www.google.com/search?hl=en&tbm=isch&tbs=ift:gif,itp:animated&q=#{query}"
+    biw=2209
+
+    url = "https://www.google.com/search?hl=en&tbm=isch&tbs=ift:gif,itp:animated&q=#{query}&safe=on"
 
     # check memcache
     m_query = "QUERY:"+query.to_s
@@ -37,11 +39,12 @@ class App < Sinatra::Application
     begin
       html = Nokogiri::HTML(open(url))
       image_urls = []
-      html.css('.images_table td a').each do |a|
+      html.css('.images_table td a').to_a do |a|
         image_urls.push CGI::parse(a[:href].gsub(/^[^\?]+\?/, ''))["imgurl"][0]
       end
       (redirect("/assets/not_found.gif") and return) if image_urls.length == 0
-      $Cache.set(m_query, image_urls.to_json)
+      # cache for a day by default
+      $Cache.set(m_query, image_urls.to_json, 60*60*24)
       redirect image_urls.sample
     rescue Exception => e
       redirect "/assets/not_found.gif"
