@@ -1,0 +1,13 @@
+defaults: &defaults
+  test: test!
+
+development:
+  <<: *defaults
+
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+
